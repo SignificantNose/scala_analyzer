@@ -317,4 +317,22 @@ public class ScalaVisitor : ScalaBaseVisitor<object?>
         AddOperation("while () ...");
         return base.VisitWhileExpr(context);
     }
+
+    public override object? VisitDoWhileExpr(ScalaParser.DoWhileExprContext context)
+    {
+        AddOperation("do ... while ()");
+        return base.VisitDoWhileExpr(context);
+    }
+
+    // public override object? VisitReturnExpr(ScalaParser.ReturnExprContext context)
+    // {
+    //     AddOperation("return ...");
+    //     return base.VisitReturnExpr(context);
+    // }
+    //
+    // public override object? VisitThrowExpr(ScalaParser.ThrowExprContext context)
+    // {
+    //     AddOperation("throw ...");
+    //     return base.VisitThrowExpr(context);
+    // }
 }
