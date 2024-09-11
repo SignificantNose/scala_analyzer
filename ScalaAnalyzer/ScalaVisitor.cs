@@ -324,6 +324,12 @@ public class ScalaVisitor : ScalaBaseVisitor<object?>
         return base.VisitDoWhileExpr(context);
     }
 
+    public override object? VisitGuard_(ScalaParser.Guard_Context context)
+    {
+        AddOperation("if ...");
+        return base.VisitGuard_(context);
+    }
+
     // public override object? VisitReturnExpr(ScalaParser.ReturnExprContext context)
     // {
     //     AddOperation("return ...");
