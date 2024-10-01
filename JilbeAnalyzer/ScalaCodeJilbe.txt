@@ -1,0 +1,96 @@
+﻿import scala.io.StdIn._
+
+object HelloWorld {
+
+  def main(args: Array[String]): Unit = {
+    val array = Array.ofDim[Int](2, 2, 2, 2, 2)
+    var value = 1
+    for (i <- 0 until 2; j <- 0 until 2; k <- 0 until 2; l <- 0 until 2; m <- 0 until 2) {
+      array(i)(j)(k)(l)(m) = value
+      value += 1
+    }
+
+    for (i <- 0 until 2) {
+      for (j <- 0 until 2) {
+        for (k <- 0 until 2) {
+          for (l <- 0 until 2) {
+            for (m <- 0 until 2) {
+              val currentValue = array(i)(j)(k)(l)(m)
+              if (currentValue % 2 == 0) {
+                println(s"$currentValue is even")
+              } else {
+                println(s"$currentValue is odd")
+              }
+              currentValue match {
+                case x if x < 5 => println(s"$x is less than 5")
+                case x if x == 5 => println(s"$x is exactly 5")
+                case _ => println(s"$currentValue is greater than 5")
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  def categorizeValue(value: Int): Unit = {
+    if (value < 10) {
+      if(value > 5){
+        println("value is between 5 and 10")
+      }
+      else{
+        println("value is less than 5")
+      }
+    } 
+    else {
+      println("value is 10 or greater")
+    }
+
+    value match {
+      case x if x % 3 == 0 => println("x is a multiple of 3")
+      case x if x % 5 == 0 => println("x is a multiple of 5")
+      case _ => println("value is not a multiple of 3 or 5")
+    }
+  }
+
+  def analyzeText():Unit={
+    var continue = true
+    
+    while (continue) {
+      val input = readLine()
+      
+      if (input.toLowerCase == "exit") {
+        continue = false
+        println("Exiting the program. Goodbye!")
+      } 
+      else {
+        val numbers = input.split(" ")
+
+          try {
+            val number = str.toInt()
+            analyzeNumber(number)
+          } 
+          catch {
+            case _: NumberFormatException =>
+              println("str is not a valid number. Please enter integers only.")
+          }
+        }
+      }
+  }
+   def analyzeNumber(number: Int): Unit = {
+    val classification = number match {
+      case n if n > 0 => "Positive"
+      case n if n < 0 => "Negative"
+      case _          => "Zero"
+    }
+
+    println(s"$number is $classification.")
+
+    if (number % 2 == 0) {
+      println(s"$number is even.")
+    } 
+    else {
+      println(s"$number is odd.")
+    }
+  }
+}

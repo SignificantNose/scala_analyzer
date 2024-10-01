@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -15,16 +14,15 @@
       <PackageReference Include="Antlr4.Runtime" Version="4.6.6" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Antlr4 Update="Scala.g4">
+        <ItemGroup>
+      <Antlr4 Update="ScalaJilbe.g4">
         <Listener>false</Listener>
-        <CustomToolNamespace>ScalaParse.Generated</CustomToolNamespace>
+        <CustomToolNamespace>ScalaJilbe.Generated</CustomToolNamespace>
       </Antlr4>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\JilbeAnalyzer\JilbeAnalyzer.csproj" />
-      <ProjectReference Include="..\ScalaAnalyzer\ScalaAnalyzer.csproj" />
+      <Content Include="ScalaJilbe.g4" />
     </ItemGroup>
 
     <PropertyGroup>

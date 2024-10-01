@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antlr_Scala", "Antlr_Scala\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScalaAnalyzer", "ScalaAnalyzer\ScalaAnalyzer.csproj", "{BDC108AB-21E3-475E-AD43-971C10F5601E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JilbeAnalyzer", "JilbeAnalyzer\JilbeAnalyzer.csproj", "{AF28A2FB-7FE7-4315-9F1D-8E8ED84E09D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{BDC108AB-21E3-475E-AD43-971C10F5601E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDC108AB-21E3-475E-AD43-971C10F5601E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDC108AB-21E3-475E-AD43-971C10F5601E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF28A2FB-7FE7-4315-9F1D-8E8ED84E09D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF28A2FB-7FE7-4315-9F1D-8E8ED84E09D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF28A2FB-7FE7-4315-9F1D-8E8ED84E09D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF28A2FB-7FE7-4315-9F1D-8E8ED84E09D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
