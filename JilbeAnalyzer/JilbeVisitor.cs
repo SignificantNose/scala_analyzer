@@ -15,6 +15,14 @@ public class JilbeVisitor : ScalaJilbeBaseVisitor<object?>
     public int cases = 0;
     public int ifs = 0;
     public int whiles = 0;
+    public int assigns = 0;
+    public int sums = 0;
+    public int muls = 0;
+    public int cmps = 0;
+    public int bits = 0;
+    public int bools = 0;
+    public int signs = 0;
+    public int brackets = 0;
     
     
     private void StartNesting()
@@ -100,6 +108,8 @@ public class JilbeVisitor : ScalaJilbeBaseVisitor<object?>
         }
         amntOfConditionals += generatorCounter;
         amntOfOperators += generatorCounter;
+        // because of for situation:
+        amntOfOperators += generatorCounter;
         fors += generatorCounter;
         
         var result = base.VisitForRight(context);
@@ -123,36 +133,42 @@ public class JilbeVisitor : ScalaJilbeBaseVisitor<object?>
     public override object? VisitAssignOp(ScalaJilbeParser.AssignOpContext context)
     {
         amntOfOperators++;
+        assigns++;
         return base.VisitAssignOp(context);
     }
 
     public override object? VisitOperationSum(ScalaJilbeParser.OperationSumContext context)
     {
         amntOfOperators++;
+        sums++;
         return base.VisitOperationSum(context);
     }
 
     public override object? VisitOperationMul(ScalaJilbeParser.OperationMulContext context)
     {
         amntOfOperators++;
+        muls++;
         return base.VisitOperationMul(context);
     }
 
     public override object? VisitOperationCmp(ScalaJilbeParser.OperationCmpContext context)
     {
         amntOfOperators++;
+        cmps++;
         return base.VisitOperationCmp(context);
     }
 
     public override object? VisitOperationBit(ScalaJilbeParser.OperationBitContext context)
     {
         amntOfOperators++;
+        bits++;
         return base.VisitOperationBit(context);
     }
 
     public override object? VisitOperationBool(ScalaJilbeParser.OperationBoolContext context)
     {
         amntOfOperators++;
+        bools++;
         return base.VisitOperationBool(context);
     }
 
@@ -160,12 +176,14 @@ public class JilbeVisitor : ScalaJilbeBaseVisitor<object?>
     {
         // hmm?
         amntOfOperators++;
+        signs++;
         return base.VisitOperationSign(context);
     }
 
     public override object? VisitBlockExpr(ScalaJilbeParser.BlockExprContext context)
     {
         amntOfOperators++;
+        brackets++;
         return base.VisitBlockExpr(context);
     }
 }
