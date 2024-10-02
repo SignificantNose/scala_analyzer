@@ -204,7 +204,7 @@ elseClause
     : 'else' (simpleExpr | simpleExpr1 '_'?)
     ;
 ifExpr
-    : ifClause elseClause?
+    : ifClause elseClause*
     ;
 
 whileExpr : 'while' '(' expr ')' NL* expr;
@@ -219,6 +219,7 @@ tryExpr
     | tryFinally
     | tryCatchFinally;
 doWhileExpr : 'do' expr 'while' '(' expr ')';
+
 forLeft : 'for' ('(' enumerators ')' | '{' enumerators '}') ;
 forRight : expr;
 for : forLeft forRight;
@@ -232,12 +233,12 @@ assignmentExpr : Id ('(' Id ')')* assignOp assignExpr;
 matchExpr : infixExpr 'match' '{' caseClauses '}';
 
 assignOp 
-     : '='
-     | '+='
-     | '*='
-     | '-='
-     | '/='
-     | '%=';
+    : '='
+    | '+='
+    | '*='
+    | '-='
+    | '/='
+    | '%=';
 assignExpr    
     : ifExpr
     | whileExpr
@@ -301,21 +302,28 @@ assignClassTemplateId : Id;
 // Dublicate lines to prevent left-recursive code.
 // can't use (simpleExpr|simpleExpr1) '.' Id
 simpleExpr1
-    : simpleExpr1WithSemi
-    | actualSimpleExpr1
-    ;
-
-simpleExpr1WithSemi
-    : actualSimpleExpr1 ';'
+    : 
+    (
+    methodInvocation
+    | functionInvocation
+    | pendExpr
+    | boolExpr
+    | arithmeticExpr
+    | '(' expr? ')'
+    ) 
+    ';'?
     ;
 
 assignSimpleExpr1
-    : assignSimpleExpr1WithSemi
-    | actualAssignSimpleExpr1
-    ;
-
-assignSimpleExpr1WithSemi
-    : actualAssignSimpleExpr1 ';'
+    : 
+    (
+    (Id '.')+ Id ('[' Id ']')? argumentExprs
+    | (typeArgs? argumentExprs)
+    | (literal|stableId|underscore) pendSymbol arithmeticExpr
+    | boolExpr
+    | arithmeticExpr
+    | '(' expr? ')'
+    ) ';'?
     ;
 
 /*
@@ -331,23 +339,15 @@ actualSimpleExpr1
     | functionInvocation
     ;
  */
-actualSimpleExpr1
-    : methodInvocation
-    | functionInvocation
-    | pendExpr
-    | boolExpr
-    | arithmeticExpr
-    | '(' expr? ')'
-    ;
 
-actualAssignSimpleExpr1
-    : assignMethodInvocation
-    | assignFunctionInvocation
-    | pendExpr
-    | boolExpr
-    | arithmeticExpr
-    | '(' expr? ')'
-    ;
+// actualAssignSimpleExpr1
+//     : ((Id '.')+ Id ('[' Id ']')? argumentExprs)
+//     | (Id typeArgs? argumentExprs)
+//     | pendExpr
+//     | boolExpr
+//     | arithmeticExpr
+//     | '(' expr? ')'
+//     ;
 
 pendSymbol
     : (':+'|'+:'|':+='|'+:=')
@@ -367,12 +367,11 @@ assignMethodInvocation
     ;
     
 boolExpr
-    : ((arithmeticExpr operationCmp arithmeticExpr) | boolConstant | boolExprWithParentheses ) (operationBool boolExpr)*
+    : ((arithmeticExpr operationCmp arithmeticExpr) | boolConstant | ('(' boolExpr ')') ) (operationBool boolExpr)*
     ;
 
 boolConstant : 'true'|'false';
 
-boolExprWithParentheses : '(' boolExpr ')';
 
 operationSum
     :'+'
@@ -383,14 +382,11 @@ operationMul
     | '*'
     | '%'
     ;
-    
-arithmeticExpr
-    : arithmeticExprMul operationSum arithmeticExpr
-    | arithmeticExprMul
-    | arithmeticExprWithParentheses
-    ;
 
-arithmeticExprWithParentheses: '(' arithmeticExpr ')';
+arithmeticExpr
+    : arithmeticExprMul (operationSum arithmeticExpr)?
+    | ('(' arithmeticExpr ')')
+    ;
 
 
 underscore: '_';
@@ -421,11 +417,9 @@ operationSign
     ;
 
 arithmeticExprMul
-    : (literal|stableId|underscore) operationMul arithmeticExprMul
-    | (literal|stableId|underscore) operationBit arithmeticExprMul    
+    : (literal|stableId|underscore) ((operationMul|operationBit) arithmeticExprMul)?
+    | ('(' arithmeticExpr ')')
     | operationSign arithmeticExprMul    
-    | arithmeticExprWithParentheses
-    | (literal|stableId|underscore)
     ;
 
 functionInvocation
@@ -433,8 +427,7 @@ functionInvocation
     ;
 functionInvocationId : Id;
 
-assignFunctionInvocation : assignFunctionInvocationId typeArgs? argumentExprs;
-assignFunctionInvocationId : Id ;
+assignFunctionInvocation : Id typeArgs? argumentExprs;
 
 exprs
     : expr (',' expr)*
