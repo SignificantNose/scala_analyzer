@@ -204,7 +204,7 @@ elseClause
     : 'else' (simpleExpr | simpleExpr1 '_'?)
     ;
 ifExpr
-    : ifClause elseClause*
+    : ifClause elseClause?
     ;
 
 whileExpr : 'while' '(' expr ')' NL* expr;
@@ -231,7 +231,13 @@ returnExpr : 'return' expr?;
 assignmentExpr : Id ('(' Id ')')* assignOp assignExpr;
 matchExpr : infixExpr 'match' '{' caseClauses '}';
 
-assignOp : '=';
+assignOp 
+     : '='
+     | '+='
+     | '*='
+     | '-='
+     | '/='
+     | '%=';
 assignExpr    
     : ifExpr
     | whileExpr

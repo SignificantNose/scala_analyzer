@@ -10,6 +10,12 @@ public class JilbeVisitor : ScalaJilbeBaseVisitor<object?>
 
     private int currentNestingLevel = 0;
     private int generatorCounter = 0;
+
+    public int fors = 0;
+    public int cases = 0;
+    public int ifs = 0;
+    public int whiles = 0;
+    
     
     private void StartNesting()
     {
@@ -30,6 +36,8 @@ public class JilbeVisitor : ScalaJilbeBaseVisitor<object?>
     {
         StartNesting();
         amntOfConditionals++;
+        amntOfOperators++;
+        cases++;
         var result = base.VisitNestedCaseClause(context);
         FinishNesting();
         return result;
@@ -39,6 +47,8 @@ public class JilbeVisitor : ScalaJilbeBaseVisitor<object?>
     {
         StartNesting();
         amntOfConditionals++;
+        amntOfOperators++;
+        ifs++;
         var result = base.VisitIfClause(context);
         FinishNesting();
         return result;
@@ -56,6 +66,8 @@ public class JilbeVisitor : ScalaJilbeBaseVisitor<object?>
     {
         StartNesting();
         amntOfConditionals++;
+        amntOfOperators++;
+        whiles++;
         var result = base.VisitWhileExpr(context);
         FinishNesting();
         return result;
@@ -66,6 +78,7 @@ public class JilbeVisitor : ScalaJilbeBaseVisitor<object?>
         // not so sure about this one, but there ARE branches, so:
         StartNesting();
         amntOfConditionals++;
+        amntOfOperators++;
         var result = base.VisitDoWhileExpr(context);
         FinishNesting();
         return result;
@@ -86,6 +99,8 @@ public class JilbeVisitor : ScalaJilbeBaseVisitor<object?>
             StartNesting();
         }
         amntOfConditionals += generatorCounter;
+        amntOfOperators += generatorCounter;
+        fors += generatorCounter;
         
         var result = base.VisitForRight(context);
         for (int i = 0; i < generatorCounter; i++)
@@ -99,7 +114,6 @@ public class JilbeVisitor : ScalaJilbeBaseVisitor<object?>
     public override object? VisitGenerator(ScalaJilbeParser.GeneratorContext context)
     {
         generatorCounter++;
-        amntOfOperators++;
         return base.VisitGenerator(context);
     }
 
