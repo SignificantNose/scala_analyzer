@@ -9,12 +9,11 @@ object HelloWorld {
       array(i)(j)(k)(l)(m) = value
       value += 1
     }
-
     for (i <- 0 until 2) {
       for (j <- 0 until 2) {
-        for (k <- 0 until 2) {
-          for (l <- 0 until 2) {
-            for (m <- 0 until 2) {
+        for (k <- 0 until 2) { }
+          for (l <- 0 until 2) { }
+            for (m <- 0 until 2) { }
               val currentValue = array(i)(j)(k)(l)(m)
               if (currentValue % 2 == 0) {
                 println(s"$currentValue is even")
@@ -23,24 +22,28 @@ object HelloWorld {
               }
               currentValue match {
                 case x if x < 5 => println(s"$x is less than 5")
-                case x if x == 5 => println(s"$x is exactly 5")
+                case x if x == 5 => { 
+			if (currentValue % 2 == 0) {
+                		println(s"$currentValue is greater than 5")
+              		}
+		}
                 case _ => println(s"$currentValue is greater than 5")
+
               }
             }
           }
         }
-      }
-    }
-  }
+   
 
   def categorizeValue(value: Int): Unit = {
+
     if (value < 10) {
       if(value > 5){
         println("value is between 5 and 10")
       }
       else{
         println("value is less than 5")
-      }
+      }	
     } 
     else {
       println("value is 10 or greater")

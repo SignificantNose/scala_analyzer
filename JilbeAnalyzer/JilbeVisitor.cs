@@ -40,16 +40,38 @@ public class JilbeVisitor : ScalaJilbeBaseVisitor<object?>
         currentNestingLevel--;
     }
 
-    public override object? VisitNestedCaseClause(ScalaJilbeParser.NestedCaseClauseContext context)
+    public override object? VisitCaseNormal(ScalaJilbeParser.CaseNormalContext context)
     {
         StartNesting();
         amntOfConditionals++;
         amntOfOperators++;
         cases++;
-        var result = base.VisitNestedCaseClause(context);
+        var result =  base.VisitCaseNormal(context);
         FinishNesting();
         return result;
     }
+    
+    // public override object? VisitCaseDefaultt(ScalaJilbeParser.CaseDefaultContext context)
+    // {
+    //     StartNesting();
+    //     amntOfConditionals++;
+    //     amntOfOperators++;
+    //     cases++;
+    //     var result =  base.VisitCaseDefault(context);
+    //     FinishNesting();
+    //     return result;
+    // }
+
+    // public override object? VisitNestedCaseClause(ScalaJilbeParser.NestedCaseClauseContext context)
+    // {
+    //     StartNesting();
+    //     amntOfConditionals++;
+    //     amntOfOperators++;
+    //     cases++;
+    //     var result = base.VisitNestedCaseClause(context);
+    //     FinishNesting();
+    //     return result;
+    // }
 
     public override object? VisitIfClause(ScalaJilbeParser.IfClauseContext context)
     {

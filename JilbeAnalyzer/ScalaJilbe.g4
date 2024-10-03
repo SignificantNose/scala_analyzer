@@ -482,10 +482,15 @@ caseClauses
     ;
 
 nestedCaseClause
-    :
-    'case' pattern guard_? '=>' block nestedCaseClause?
+    : caseDefault
+    | caseNormal
     ;
 
+caseDefault:
+'case' '_' '=>' block nestedCaseClause?
+;
+
+caseNormal: 'case' pattern guard_? '=>' block nestedCaseClause?;
 caseClause
     : 'case' pattern guard_? '=>' block
     ;
